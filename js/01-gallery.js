@@ -7,5 +7,6 @@
 // Заміна значення атрибута src елемента <img> в модальному вікні перед відкриттям. Використовуй готову розмітку модального вікна із зображенням з прикладів бібліотеки basicLightbox.
 
 import { galleryItems } from './gallery-items.js';
-
+const galeryImg = document.querySelector(`gallery`);
+const markUp = createMarkeUp(galleryItems);
 console.log(galleryItems);

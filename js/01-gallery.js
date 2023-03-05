@@ -6,19 +6,21 @@
 // Відкриття модального вікна по кліку на елементі галереї. Для цього ознайомся з документацією і прикладами.
 // Заміна значення атрибута src елемента <img> в модальному вікні перед відкриттям. Використовуй готову розмітку модального вікна із зображенням з прикладів бібліотеки basicLightbox.
 
-import { galleryItems } from '.gallery-items.js';
+import {galleryItems} from './gallery-items.js';
  
-//const galleryItems = document.querySelector(`.gallery`);
-//galeryImg.insertAdjacentHTML(`beforeend`, `createMarkUp`);
-function createMarkUp(galleryItems) {
-    return galleryItem.map(({ preview, original, description}) => {
+const galleryImg = document.querySelector(`.gallery`);
+const imgMarkup = createMarkup(galleryItems);
+galleryImg.insertAdjacentHTML(`beforeend`, imgMarkup);
+galleryImg.addEventListener(`click`, onGalleryImgClick);
+function createMarkup(galleryItems) {
+    return galleryItems.map(({ preview, original, description}) => {
         return `<div class = "gallery">
         <a class="gallery__link">
         <img src = "${preview}" data-source ="${original} " alt ="${description} ">
         </a>
         </div>`;
     }).join(``);
-    return markUp;
+
 }
 console.log(galleryItems);
 

@@ -6,41 +6,96 @@
 // Відкриття модального вікна по кліку на елементі галереї. Для цього ознайомся з документацією і прикладами.
 // Заміна значення атрибута src елемента <img> в модальному вікні перед відкриттям. Використовуй готову розмітку модального вікна із зображенням з прикладів бібліотеки basicLightbox.
 
-import {galleryItems} from './gallery-items.js';
+// import {galleryItems} from './gallery-items.js';
  
-const galleryImg = document.querySelector(`.gallery`);
-const imgMarkup = createMarkup(galleryItems);
-galleryImg.insertAdjacentHTML(`beforeend`, imgMarkup);
-galleryImg.addEventListener(`click`, onGalleryImgClick);
-function createMarkup(galleryItems) {
-    return galleryItems.map(({ preview, original, description}) => {
-        return `<div class = "gallery">
-        <a class="gallery__link">
-        <img src = "${preview}" data-source ="${original} " alt ="${description} ">
-        </a>
-        </div>`;
-    }).join(``);
+// const galleryImg = document.querySelector(`div.gallery`);
 
-}
-console.log(galleryItems);
-
-
-
-// const instance = basicLightbox.create(`
-//     <div class="modal">
-//         <p>A custom modal that has been styled independently. It's not part of basicLightbox, but perfectly shows its flexibility.</p>
-//         <input placeholder="Type something">
-//         <a>Close</a>
-//     </div>
-// `, {
-//     onShow: (instance) => {
-//         instance.element().querySelector('a').onclick = instance.close
+// const imgMarkup = ({ preview, original, description }) => {
+//     return `<div class = "gallery">
+//         <a class="gallery__link">
+//         <img src = "${preview}" data-source ="${original} " alt ="${description} ">
+//         </a>
+//         </div>`
+// };
+// const makeGalleryListElement = imgMarkup.map(galleryImg).join(""); 
+//   const galleryListRef.insertAdjacentHTML("beforeend", imgMarkup);
+// galleryListRef.addEventListener(`click`, (onGalleryImgClick));
+// function onGalleryImgClick(evt) {
+//     evt.preventDefault();
+//     if (evt.target.nodeName !== `IMG`) {
+//         return;
 //     }
-// })
-
-// instance.show()
+    
 
 
-const instance = basicLightbox.create(`
-    <img src="assets/images/image.png" width="800" height="600">
-`)
+//     const instance = basicLightbox.create(
+//         `<img src="${evt.target.dataset - source}" width="800" height="600"> `,
+//         {
+//             onShow: () =>{ 
+//                 document.addEventListener(`keydown`, onEscapeClose)
+//         },
+//         onclose: () => {
+//             document.removeEventListener("keydown", onEscapeClose);
+//         }
+// }
+// )
+// instance.show();
+// function onEscapeClose(evt) {
+//     if (evt.code === "Escape") {
+//         instance.close();
+//     }
+// }
+
+///
+
+    import { galleryItems } from "./gallery-items.js";
+
+const galleryListRef = document.querySelector("div.gallery");
+
+const makeGalleryListMarkup = ({ preview, original, description }) => {
+  return `
+    <div class="gallery__item">
+      <a class="gallery__link" href="${original}">
+      <img
+        class="gallery__image"
+        src="${preview}"
+        data-source="${original}"
+        alt="${description}"
+      />
+      </a>
+    </div>
+  `;
+};
+
+const makeGalleryListElement = galleryItems.map(makeGalleryListMarkup).join("");
+galleryListRef.insertAdjacentHTML("beforeend", makeGalleryListElement);
+
+galleryListRef.addEventListener("click", onGalleryImageClick);
+
+function onGalleryImageClick(evt) {
+  evt.preventDefault();
+
+  if (evt.target.nodeName !== "IMG") {
+    return;
+  }
+
+  const instance = basicLightbox.create(
+    `<img src="${evt.target.dataset.source}" width="800" height="600">`,
+    {
+      onShow: () => {
+        document.addEventListener("keydown", onEscapeClose);
+      },
+      onClose: () => {
+        document.removeEventListener("keydown", onEscapeClose);
+      },
+    }
+  );
+
+  instance.show();
+
+  function onEscapeClose(evt) {
+    if (evt.code === "Escape") {
+      instance.close();
+    }
+  }
+}

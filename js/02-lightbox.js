@@ -13,15 +13,6 @@ const makeGalleryListMarkup = ({ original, preview, description}) => {
 const makeGalleryListElement = galleryItems.map(makeGalleryListMarkup).join("");
 galleryListRef.insertAdjacentHTML("beforeend", makeGalleryListElement);
 
-galleryListRef.addEventListener("click", onGalleryImageClick);
+const lightbox = new SimpleLightbox('.gallery a', { captionsData: `alt`, captionPosition: 'bottom', captionDelay: 250 });
 
-function onGalleryImageClick(evt) {
-    evt.preventDefault();
-
-    if (evt.target.nodeName !== "IMG") {
-        return;
-    }
-
-    const lightbox = new SimpleLightbox('.gallery a', { captionsData: `alt`, captionPosition: 'bottom', captionDelay: 250 });
-}
 
